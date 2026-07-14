@@ -1,5 +1,39 @@
-<?php
-// GENERATO DA genera-indici.js: le modifiche manuali a questo file verranno sovrascritte.
+#!/usr/bin/env node
+
+const fs = require('node:fs');
+const path = require('node:path');
+
+const ROOT = process.cwd();
+const GENERATED_MARKER = 'GENERATO DA genera-indici.js';
+
+function isGeneratedIndex(contents) {
+    return contents.includes(GENERATED_MARKER);
+}
+
+function isOldNavigationIndex(contents) {
+    return contents.includes("glob($estensione)") &&
+        contents.includes('titolo_da_nome_file');
+}
+
+function availableExerciseName(lessonPath) {
+    const extension = '.php';
+    const base = 'esercizio-index';
+    let candidate = `${base}${extension}`;
+    let counter = 2;
+
+    while (fs.existsSync(path.join(lessonPath, candidate))) {
+        candidate = `${base}-${counter}${extension}`;
+        counter += 1;
+    }
+
+    return candidate;
+}
+
+function phpTemplate(lessonName) {
+    const escapedLessonName = lessonName.replaceAll("'", "\\'");
+
+    return `<?php
+// ${GENERATED_MARKER}: le modifiche manuali a questo file verranno sovrascritte.
 
 $fileCorrente = basename(__FILE__);
 $filePhp = array_values(array_filter(
@@ -54,7 +88,7 @@ function titoloDaNome(string $nome): string
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>L1 - Esercizi PHP</title>
+    <title>${escapedLessonName} - Esercizi PHP</title>
     <style>
         body { font-family: system-ui, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; background: #f7f7f8; color: #1a1a1a; }
         h1 { border-bottom: 2px solid #444; padding-bottom: .5rem; }
@@ -67,7 +101,7 @@ function titoloDaNome(string $nome): string
     </style>
 </head>
 <body>
-    <h1>L1 - Esercizi PHP</h1>
+    <h1>${escapedLessonName} - Esercizi PHP</h1>
 
     <nav aria-label="Esercizi PHP">
         <h2>File</h2>
@@ -94,3 +128,31 @@ function titoloDaNome(string $nome): string
     </nav>
 </body>
 </html>
+`;
+}
+
+const lessons = fs.readdirSync(ROOT, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && /^L\d+$/i.test(entry.name))
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+if (lessons.length === 0) {
+    console.error('Nessuna cartella di lezione (L1, L2, ...) trovata.');
+    process.exitCode = 1;
+} else {
+    for (const lesson of lessons) {
+        const lessonPath = path.join(ROOT, lesson.name);
+        const indexPath = path.join(lessonPath, 'index.php');
+
+        if (fs.existsSync(indexPath)) {
+            const contents = fs.readFileSync(indexPath, 'utf8');
+            if (!isGeneratedIndex(contents) && !isOldNavigationIndex(contents)) {
+                const exerciseName = availableExerciseName(lessonPath);
+                fs.renameSync(indexPath, path.join(lessonPath, exerciseName));
+                console.log(`${lesson.name}: index.php esistente conservato come ${exerciseName}`);
+            }
+        }
+
+        fs.writeFileSync(indexPath, phpTemplate(lesson.name), 'utf8');
+        console.log(`${lesson.name}: index.php generato`);
+    }
+}

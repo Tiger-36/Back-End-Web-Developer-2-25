@@ -54,7 +54,7 @@ function titoloDaNome(string $nome): string
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>L1 - Esercizi PHP</title>
+    <title>L4 - Esercizi PHP</title>
     <style>
         body { font-family: system-ui, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; background: #f7f7f8; color: #1a1a1a; }
         h1 { border-bottom: 2px solid #444; padding-bottom: .5rem; }
@@ -67,7 +67,7 @@ function titoloDaNome(string $nome): string
     </style>
 </head>
 <body>
-    <h1>L1 - Esercizi PHP</h1>
+    <h1>L4 - Esercizi PHP</h1>
 
     <nav aria-label="Esercizi PHP">
         <h2>File</h2>
