@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Spazio Comune: corsi e attività per il quartiere.">
+  <title>Spazio Comune | Home</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Intestazione del sito: logo e navigazione principale -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="logo" href="index.html" aria-label="Spazio Comune - Home">
+        <span class="logo-mark">SC</span>
+        <span>Spazio Comune</span>
+      </a>
+
+      <!-- Pulsante visibile sugli schermi piccoli -->
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-menu">
+        <span class="sr-only">Apri il menu</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-menu" class="main-nav" aria-label="Navigazione principale">
+        <a class="active" href="index.html" aria-current="page">Home</a>
+        <a href="corsi.html">Corsi</a>
+        <a href="contatti.html">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenuto principale della pagina -->
+  <main>
+    <!-- Sezione introduttiva -->
+    <section class="hero">
+      <div class="container hero-content">
+        <div>
+          <p class="eyebrow">Impara, incontra, condividi</p>
+          <h1>Uno spazio aperto alle idee del quartiere.</h1>
+          <p class="hero-text">Laboratori, corsi e incontri per scoprire qualcosa di nuovo insieme.</p>
+          <div class="button-group">
+            <a class="button" href="corsi.html">Scopri i corsi</a>
+            <a class="button button-secondary" href="contatti.html">Scrivici</a>
+          </div>
+        </div>
+        <div class="hero-card" aria-hidden="true">
+          <span>☀</span>
+          <strong>Questa settimana</strong>
+          <p>6 attività<br>3 laboratori<br>1 evento speciale</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Attività in evidenza -->
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">In evidenza</p>
+          <h2>Le prossime attività</h2>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <span class="card-icon">✎</span>
+            <p class="card-meta">Martedì · 18:00</p>
+            <h3>Scrittura creativa</h3>
+            <p>Giochi, racconti e tecniche per dare forma alle proprie idee.</p>
+            <a class="text-link" href="corsi.html">Scopri il corso →</a>
+          </article>
+          <article class="card">
+            <span class="card-icon">⌘</span>
+            <p class="card-meta">Giovedì · 17:30</p>
+            <h3>Digitale facile</h3>
+            <p>Un laboratorio pratico per usare meglio computer e smartphone.</p>
+            <a class="text-link" href="corsi.html">Scopri il corso →</a>
+          </article>
+          <article class="card">
+            <span class="card-icon">♬</span>
+            <p class="card-meta">Sabato · 10:00</p>
+            <h3>Musica d'insieme</h3>
+            <p>Suoniamo in gruppo: esperienza non richiesta, curiosità sì.</p>
+            <a class="text-link" href="corsi.html">Scopri il corso →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Presentazione dell'associazione -->
+    <section class="section section-accent">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Chi siamo</p>
+          <h2>Un'associazione fatta di persone</h2>
+        </div>
+        <div>
+          <p>Spazio Comune nasce nel 2018 per rendere cultura e formazione accessibili a tutti. Ogni attività è
+            un'occasione per incontrarsi e far circolare competenze.</p>
+          <a class="text-link" href="contatti.html">Vieni a conoscerci →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Piè di pagina con indirizzo e recapiti -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong>Spazio Comune</strong>
+        <p>Via delle Idee 12, Torino</p>
+      </div>
+      <div>
+        <p>
+          <a href="mailto:ciao@spaziocomune.it">ciao@spaziocomune.it</a><br>
+          011 123 4567
+        </p>
+      </div>
+      <p>© <span data-current-year>2026</span> Spazio Comune</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript caricati dopo il contenuto della pagina -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>

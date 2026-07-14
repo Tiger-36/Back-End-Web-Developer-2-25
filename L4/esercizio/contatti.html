@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contatta Spazio Comune.">
+  <title>Spazio Comune | Contatti</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Intestazione del sito: logo e navigazione principale -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="logo" href="index.html" aria-label="Spazio Comune - Home">
+        <span class="logo-mark">SC</span>
+        <span>Spazio Comune</span>
+      </a>
+
+      <!-- Pulsante visibile sugli schermi piccoli -->
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-menu">
+        <span class="sr-only">Apri il menu</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="main-menu" class="main-nav" aria-label="Navigazione principale">
+        <a href="index.html">Home</a>
+        <a href="corsi.html">Corsi</a>
+        <a class="active" href="contatti.html" aria-current="page">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenuto principale della pagina -->
+  <main>
+    <!-- Titolo e introduzione della pagina -->
+    <section class="page-hero">
+      <div class="container narrow">
+        <p class="eyebrow">Contatti</p>
+        <h1>Passa a trovarci o scrivici.</h1>
+        <p>Rispondiamo dal lunedì al venerdì, dalle 9:00 alle 18:00.</p>
+      </div>
+    </section>
+
+    <!-- Recapiti e modulo di contatto -->
+    <section class="section">
+      <div class="container contact-layout">
+        <!-- Informazioni di contatto -->
+        <div class="contact-info">
+          <h2>Dove siamo</h2>
+          <p>
+            <strong>Spazio Comune</strong><br>
+            Via delle Idee 12<br>
+            10100 Torino
+          </p>
+
+          <h2>Recapiti</h2>
+          <p>
+            <a href="mailto:ciao@spaziocomune.it">ciao@spaziocomune.it</a><br>
+            <a href="tel:+390111234567">011 123 4567</a>
+          </p>
+
+          <h2>Orari</h2>
+          <p>
+            Lun–Ven: 9:00–19:00<br>
+            Sab: 9:00–13:00<br>
+            Dom: chiuso
+          </p>
+        </div>
+
+        <!-- Modulo dimostrativo: non deve essere gestito nell'esercizio PHP -->
+        <form class="contact-form" action="#" method="post" novalidate>
+          <h2>Invia un messaggio</h2>
+
+          <div class="field">
+            <label for="name">Nome e cognome</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+            <small class="error"></small>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+            <small class="error"></small>
+          </div>
+
+          <div class="field">
+            <label for="subject">Argomento</label>
+            <select id="subject" name="subject">
+              <option value="corsi">Informazioni sui corsi</option>
+              <option value="proposta">Proposta di attività</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message">Messaggio</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <small class="error"></small>
+          </div>
+
+          <label class="checkbox">
+            <input type="checkbox" name="privacy" required>
+            <span>Ho letto e accetto l'informativa privacy.</span>
+          </label>
+
+          <button class="button" type="submit">Invia messaggio</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Piè di pagina con indirizzo e recapiti -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong>Spazio Comune</strong>
+        <p>Via delle Idee 12, Torino</p>
+      </div>
+      <div>
+        <p>
+          <a href="mailto:ciao@spaziocomune.it">ciao@spaziocomune.it</a><br>
+          011 123 4567
+        </p>
+      </div>
+      <p>© <span data-current-year>2026</span> Spazio Comune</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript caricati dopo il contenuto della pagina -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>

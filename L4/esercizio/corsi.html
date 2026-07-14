@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Scopri i corsi di Spazio Comune.">
+  <title>Spazio Comune | Corsi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Intestazione del sito: logo e navigazione principale -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="logo" href="index.html" aria-label="Spazio Comune - Home">
+        <span class="logo-mark">SC</span>
+        <span>Spazio Comune</span>
+      </a>
+
+      <!-- Pulsante visibile sugli schermi piccoli -->
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-menu">
+        <span class="sr-only">Apri il menu</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="main-menu" class="main-nav" aria-label="Navigazione principale">
+        <a href="index.html">Home</a>
+        <a class="active" href="corsi.html" aria-current="page">Corsi</a>
+        <a href="contatti.html">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenuto principale della pagina -->
+  <main>
+    <!-- Titolo e introduzione della pagina -->
+    <section class="page-hero">
+      <div class="container narrow">
+        <p class="eyebrow">Programma</p>
+        <h1>Trova il corso giusto per te.</h1>
+        <p>Attività semplici, pratiche e aperte a ogni livello.</p>
+      </div>
+    </section>
+
+    <!-- Elenco dei corsi disponibili -->
+    <section class="section">
+      <div class="container">
+        <div class="card-grid course-grid">
+          <!-- Scheda di un singolo corso -->
+          <article class="card">
+            <span class="badge">Creatività</span>
+            <h2>Scrittura creativa</h2>
+            <p>Con Marta Riva</p>
+            <ul class="details">
+              <li>Martedì, 18:00–19:30</li>
+              <li>8 incontri</li>
+              <li>€ 80</li>
+            </ul>
+            <a class="button small" href="contatti.html">Chiedi informazioni</a>
+          </article>
+
+          <article class="card">
+            <span class="badge">Tecnologia</span>
+            <h2>Digitale facile</h2>
+            <p>Con Luca Serra</p>
+            <ul class="details">
+              <li>Giovedì, 17:30–19:00</li>
+              <li>6 incontri</li>
+              <li>€ 60</li>
+            </ul>
+            <a class="button small" href="contatti.html">Chiedi informazioni</a>
+          </article>
+
+          <article class="card">
+            <span class="badge">Musica</span>
+            <h2>Musica d'insieme</h2>
+            <p>Con Anna Costa</p>
+            <ul class="details">
+              <li>Sabato, 10:00–12:00</li>
+              <li>10 incontri</li>
+              <li>€ 95</li>
+            </ul>
+            <a class="button small" href="contatti.html">Chiedi informazioni</a>
+          </article>
+
+          <article class="card">
+            <span class="badge">Benessere</span>
+            <h2>Yoga dolce</h2>
+            <p>Con Elena Bassi</p>
+            <ul class="details">
+              <li>Mercoledì, 09:30–10:30</li>
+              <li>12 incontri</li>
+              <li>€ 100</li>
+            </ul>
+            <a class="button small" href="contatti.html">Chiedi informazioni</a>
+          </article>
+
+          <article class="card">
+            <span class="badge">Lingue</span>
+            <h2>English conversation</h2>
+            <p>Con James Hill</p>
+            <ul class="details">
+              <li>Venerdì, 18:30–20:00</li>
+              <li>8 incontri</li>
+              <li>€ 85</li>
+            </ul>
+            <a class="button small" href="contatti.html">Chiedi informazioni</a>
+          </article>
+
+          <!-- Invito a proporre una nuova attività -->
+          <article class="card callout">
+            <p class="eyebrow">Hai un'idea?</p>
+            <h2>Proponi un'attività</h2>
+            <p>Cerchiamo sempre nuovi insegnanti e nuove competenze da condividere.</p>
+            <a class="text-link" href="contatti.html">Parliamone →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Piè di pagina con indirizzo e recapiti -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong>Spazio Comune</strong>
+        <p>Via delle Idee 12, Torino</p>
+      </div>
+      <div>
+        <p>
+          <a href="mailto:ciao@spaziocomune.it">ciao@spaziocomune.it</a><br>
+          011 123 4567
+        </p>
+      </div>
+      <p>© <span data-current-year>2026</span> Spazio Comune</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript caricati dopo il contenuto della pagina -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>
