@@ -26,18 +26,21 @@ $auth = new Auth($connData, $authUrls);
 </head>
 <body>
     <header class="justify-content-center py-3">
-        <div class="row">
-
-            <ul class="nav nav-pills col-12 col-md-4"> 
-                <?php include __DIR__ . '/nav.php' ?>
-            </ul>
-            <ul class="nav nav-pills col-12 col-md-4">
-                <?php include __DIR__ . '/auth-nav.php' ?>
-            </ul>
-            <?php if($auth->isLoggedIn()):?>
-            <div class="col-12 col-md-4">
-                <?="Benvenuto/a " . $auth->getCurrentUserData('nome');?>
+        <div class="container">
+            <div class="row">        
+                <ul class="nav nav-pills col-12 col-md-4"> 
+                    <?php include __DIR__ . '/nav.php' ?>
+                </ul>
+                <ul class="nav nav-pills col-12 col-md-4">
+                    <?php include __DIR__ . '/auth-nav.php' ?>
+                </ul>
+                <?php if($auth->isLoggedIn()):?>
+                    <div class="col-12 col-md-4">
+                        <?="Benvenuto/a " . $auth->getCurrentUserData('nome');?>
+                    </div>
+                <?php endif;?>
             </div>
-            <?php endif;?>
         </div>
     </header>
+
+    <?php ErrorHelper::renderMessage();?>

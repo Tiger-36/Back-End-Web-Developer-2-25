@@ -1,17 +1,29 @@
 <?php
 require_once __DIR__ . '/../config.php';
 require_once BASE_PATH . '/classes/Connection.php';
+require_once BASE_PATH . '/classes/ErrorHelper.php';
 
+/**
+ * Gestisce la registrazione, l'autenticazione e la sessione dell'utente.
+ */
 class Auth extends Connection{
 
+    /** @var array{login: string|null, register: string|null, dashboard: string|null} URL dell'applicazione. */
     private $urls = [
         'login' => null,  
         'register' => null,  
         'dashboard' => null 
     ];
 
+    /** @var array<string, mixed>|null Dati dell'utente autenticato nella richiesta corrente. */
     private $user = null;
 
+    /**
+     * Inizializza la connessione al database e la sessione PHP.
+     *
+     * @param array{dbName: string, dbUser: string, dbPassword: string} $connData Credenziali del database.
+     * @param array{login: string|null, register: string|null, dashboard: string|null} $urls URL di navigazione.
+     */
     public function __construct(array $connData, array $urls){
         [
             'dbName' => $dbName,
@@ -28,6 +40,9 @@ class Auth extends Connection{
         if(session_status() == PHP_SESSION_NONE){
             session_start();
         }
+
+        // Ripristina l'utente autenticato nelle richieste successive al login.
+        $this->user = $_SESSION['user'] ?? null;
     }
 
 
@@ -41,8 +56,8 @@ class Auth extends Connection{
         $sanitized = [];
 
         foreach($fields as $f){
-            if(!isset($data[$f])) die('tutti i campi devono essere compilati');
-            if(empty($data[$f])) die('tutti i campi devono essere compilati');
+            if(!isset($data[$f])) ErrorHelper::setError('tutti i campi devono essere compilati', $redirectUrl);
+            if(empty($data[$f])) ErrorHelper::setError('tutti i campi devono essere compilati', $redirectUrl);
 
             $sanitized[$f] = trim(strip_tags($data[$f]));
         }
@@ -50,6 +65,12 @@ class Auth extends Connection{
         return $sanitized;
     }
 
+    /**
+     * Registra un nuovo utente e lo reindirizza alla pagina di login.
+     *
+     * @param array<string, mixed> $data Dati del modulo di registrazione.
+     * @return void
+     */
     public function register(array $data):void{
 
         [
@@ -82,7 +103,7 @@ class Auth extends Connection{
             $this->getConnection()->commit();
 
 
-            header('Location ' . $this->urls['login']);
+            ErrorHelper::setMessage('Utente registrato con successo!');
 
         }catch(PDOException $e){
 
@@ -91,14 +112,20 @@ class Auth extends Connection{
             }
 
             if($e->errorInfo[1] == 1062){
-                die("Utente già esistente");
+                ErrorHelper::setError('Utente Già registrato', $this->urls['register']);
             }
             
-            die($e->getMessage());
+            ErrorHelper::setError('Errore, riprovare più tardi', $this->urls['register']);
 
         }
     }
     
+    /**
+     * Effettua il login, memorizzando l'utente autenticato nella sessione.
+     *
+     * @param array<string, mixed> $data Dati del modulo di login.
+     * @return void
+     */
     public function login(array $data):void{
         [
             'email' => $email,
@@ -116,7 +143,9 @@ class Auth extends Connection{
 
             $utente = $query->fetch();
 
-            if(!password_verify($password,$utente['password_hash'])) die('password errata');
+            if(!$utente || !password_verify($password, $utente['password_hash'])){
+                ErrorHelper::setError('Email o password errata', $this->urls['login']);
+            }
 
             //cambia l'ID dopo il login per impedire che un ID di sessione precedente venga riutilizzato
             session_regenerate_id(true);
@@ -126,48 +155,96 @@ class Auth extends Connection{
             $_SESSION['user'] = $utente;
             $this->user =  $utente;
 
-            header('Location: ' . BASE_URL . '/rotte-protette/dashboard.php');
+            header('Location: ' . $this->urls['dashboard']);
             
         }catch(PDOException $e){
-
-            die($e->getMessage());
+            ErrorHelper::setError('Errore, riprovare più tardi', $this->urls['login']);
 
         }
     }
 
 
+    /**
+     * Chiude la sessione dell'utente e lo reindirizza.
+     *
+     * @param string $redirectUrl URL verso cui reindirizzare l'utente.
+     * @return void
+     */
     public function logout(string $redirectUrl){
         session_unset();
         session_destroy();
 
         $this->user = null;
 
+        // Avvia una nuova sessione per mostrare il messaggio dopo il reindirizzamento.
+        session_start();
+        ErrorHelper::setMessage('Logout effettuato con successo', $redirectUrl);
+
         header('Location: ' . ($redirectUrl ?? BASE_URL));
     }
 
+    /**
+     * Verifica se è disponibile un utente autenticato.
+     *
+     * @return bool True se l'utente ha effettuato il login.
+     */
     public function isLoggedIn():bool{
         return $this->user !== null;
     }
 
+    /**
+     * Restituisce i dati dell'utente autenticato.
+     *
+     * @return array<string, mixed>|null Dati utente o null in assenza di login.
+     */
     public function getCurrentUser():array|null{
         return $this->user;
     }
 
+    /**
+     * Restituisce l'identificativo dell'utente autenticato.
+     *
+     * @return int|null ID utente oppure null se non disponibile.
+     */
     public function getUserId():int|null{
         return $this->user['id'] ?? null;
     }
 
+    /**
+     * Legge un singolo campo dai dati dell'utente autenticato.
+     *
+     * @param string $field Nome del campo richiesto.
+     * @return mixed Valore del campo oppure null se assente.
+     */
     public function getCurrentUserData(string $field):mixed{
         return $this->user[$field] ?? null;
     }
 
 
-    public function requireLogin(){
-        if(!$this->isLoggedIn()) header('location: ' . BASE_URL . '/login.php'); 
+    /**
+     * Impedisce l'accesso agli utenti non autenticati.
+     *
+     * @param string|null $redirectUrl URL alternativo per il reindirizzamento.
+     * @return void
+     */
+    public function requireLogin(?string $redirectUrl = null){
+        if(!$this->isLoggedIn()){
+            $redirectUrl = $redirectUrl ?? $this->urls['login'];
+            ErrorHelper::setError('Devi effettuare il login per accedere a questa pagina', $redirectUrl);
         }
+    }
         
-    public function requireGuest(){
-        if($this->isLoggedIn()) header('location: ' . BASE_URL . '/rotte-protette/dashboard.php');  
+    /**
+     * Impedisce agli utenti autenticati di accedere alle pagine per ospiti.
+     *
+     * @param string|null $redirectUrl URL alternativo per il reindirizzamento.
+     * @return void
+     */
+    public function requireGuest(?string $redirectUrl = null){
+        if($this->isLoggedIn()){
+            $redirectUrl = $redirectUrl ?? $this->urls['dashboard'];
+            ErrorHelper::setError('Hai già effettuato il login', $redirectUrl);
+        }
     }
 
 }
