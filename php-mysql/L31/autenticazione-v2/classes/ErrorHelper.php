@@ -12,7 +12,7 @@ class ErrorHelper{
      * @param string $redirectUrl URL di reindirizzamento.
      * @return void
      */
-    public static function setError(string $message, string $redirectUrl){
+    public static function setError(string $message, string $redirectUrl = ''){
         $_SESSION['error'] = true;
         $_SESSION['message'] = $message;
 
